@@ -34,6 +34,11 @@ def apply_default_custom_css():
         + """ strong {
             color: #5cc5eb;  /* 強調部分も淡いSnowflake色に */
         }
+        ."""
+        + DEFAULT_TOP_TEXT_AREA
+        + """ p:last-child {
+            margin-bottom: 0;
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -55,7 +60,6 @@ def display_applied_message(message: str, css_name: str = DEFAULT_TOP_TEXT_AREA)
         """,
         unsafe_allow_html=True,
     )
-
 
 def header_animation(css_name: str = DEFAULT_HEADER_ANIMATION_AREA) -> None:
     st.html(
