@@ -12,9 +12,9 @@ st.title("💎データクリスタルの復活")
 
 css_name = apply_default_custom_css()
 message = f"""
-    この旅もいよいよ終盤です。
+    この旅もいよいよ終盤です。<br>
 
-    **選ばれしものたちよ、いざ最後の挑戦に立ち向かうのです！**
+    <strong>選ばれしものたちよ、いざ最後の挑戦に立ち向かうのです！</strong>
     """
 
 display_applied_message(message, css_name)

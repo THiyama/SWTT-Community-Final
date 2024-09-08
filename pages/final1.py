@@ -1,23 +1,29 @@
 import streamlit as st
 
 from utils.utils import display_page_titles_sidebar
-from utils.designs import display_problem_statement
+from utils.designs import display_problem_statement, apply_default_custom_css
 
+
+HINT_TEXT1 = "ヒント1: 「追憶の港」"
+HINT_TEXT2 = "ヒント2: 「港の本性」"
+HINT_TEXT3 = "ヒント3: 「その港へ・・・」"
 display_page_titles_sidebar()
-
+apply_default_custom_css()
 
 st.header("運命の暗号", divider="rainbow")
-display_problem_statement("次のヒントをもとに、呪文を導き出せ！")
+display_problem_statement("""
+                          <span font-size:45px;">次のヒントをもとに、呪文を導き出せ！</span>
+                          """)
 
-hint = st.radio("ヒント", ["ヒント1", "ヒント2", "ヒント3"])
+hint = st.radio("ヒント", [HINT_TEXT1, HINT_TEXT2, HINT_TEXT3])
 
-if hint == "ヒント1":
+if hint == HINT_TEXT1:
     st.image("pages/resources/hint1.png")
 
-if hint == "ヒント2":
-    st.image("pages/resources/moscone_center.png")
+if hint == HINT_TEXT2:
+    st.image("pages/resources/moscone_center2.png")
 
-if hint == "ヒント3":
+if hint == HINT_TEXT3:
     st.image("pages/resources/hint3.png")
 
 answer = st.text_input("導き出した呪文を入力してください")

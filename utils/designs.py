@@ -9,7 +9,13 @@ DEFAULT_PROBLEM_STATEMENT_AREA = "custom-problem-statement-area"
 def apply_default_custom_css():
     st.markdown(
         """
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap" rel="stylesheet">
         <style>
+        h1, h2, div, p {
+            font-family: "Zen Antique", serif !important;
+        }
         ."""
         + DEFAULT_TOP_TEXT_AREA
         + """ {
@@ -19,8 +25,6 @@ def apply_default_custom_css():
             border: 2px solid #11567F;  /* グレーのボーダー */
             border-left: 5px solid #29B5E8;  /* Snowflake色のサイドライン */
             color: #ffffff;  /* 白文字 */
-            font-family: 'Cinzel', serif;  /* 古代っぽいフォント */
-            font-size: 16px;
             line-height: 1.6;
         }
         ."""
@@ -46,22 +50,32 @@ def apply_default_custom_css():
 
     return DEFAULT_TOP_TEXT_AREA
 
-
+# メッセージを表示する関数
 def display_applied_message(message: str, css_name: str = DEFAULT_TOP_TEXT_AREA):
     if css_name == DEFAULT_TOP_TEXT_AREA:
         apply_default_custom_css()
     else:
         apply_default_custom_css()
 
-    st.markdown(
+    # インラインスタイルでフォントサイズを変更
+    st.html(
         f"""
-        <div class='{css_name}'>
-        {message}
-        """,
-        unsafe_allow_html=True,
+        <div class='{css_name}' style='font-size: 36px !important;'>
+        {message} 
+        </div>
+        """
     )
 
-def header_animation(css_name: str = DEFAULT_HEADER_ANIMATION_AREA) -> None:
+
+@st.cache_data
+def header_animation(
+    css_name: str = DEFAULT_HEADER_ANIMATION_AREA,
+    image_file: str = "pages/common/images/sky.png",
+) -> None:
+    import base64
+
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
     st.html(
         f"""
         <div class="{css_name}">
@@ -71,10 +85,10 @@ def header_animation(css_name: str = DEFAULT_HEADER_ANIMATION_AREA) -> None:
             position:relative;
             overflow:hidden;
             box-shadow:0 4px 20px rgba(0, 0, 0, 0.2);
+            background-image: url(data:image/{"png"};base64,{encoded_string});
             margin:0 auto;
             width:300px;
             height:30px;
-            background-color:#f0f8ff;
             margin: 0 calc(50% - 50vw);
             width: 100vw;
         }}
@@ -85,7 +99,7 @@ def header_animation(css_name: str = DEFAULT_HEADER_ANIMATION_AREA) -> None:
             width:200%;
             height:200%;
             content:"";
-            background-color:#1e90ff;
+            background-color:#1e50a2;
             animation:wave linear 6s infinite;
         }}
         .{css_name}::before {{
@@ -111,40 +125,83 @@ def header_animation(css_name: str = DEFAULT_HEADER_ANIMATION_AREA) -> None:
     )
 
 
-def display_problem_statement(html_message: str, css_name: str = DEFAULT_PROBLEM_STATEMENT_AREA):
+def display_problem_statement(
+    html_message: str,
+    css_name: str = DEFAULT_PROBLEM_STATEMENT_AREA,
+    image_file: str = "pages/common/images/quest.jpeg",
+):
+    import base64
+
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
     st.html(
         f"""
         <p>
             <div class="{css_name}">
-            {html_message}
+            <strong>{html_message}</strong>
             </div>
             <style>
-            .{css_name} {{
-                background-color: rgb(190, 205, 214);
-                padding: 30px;
-            }}
             .{css_name} .box {{
                 border-radius: 10px;
             }}
             .{css_name} {{
-                background-color: rgb(240, 240, 250);
-                transition: box-shadow 0.5s;
-                color: #696969;
-                box-shadow:
-                    10px 10px 30px transparent,
-                    -10px -10px 30px transparent,
-                    inset 10px 10px 30px rgba(18, 47, 61, 0.5),
-                    inset -10px -10px 30px rgba(248, 253, 255, 0.9);
-            }}
-            .{css_name}:hover {{
-                color: #a0522d;
-                box-shadow:
-                    10px 10px 30px rgba(18, 47, 61, 0.5),
-                    -10px -10px 30px rgba(248, 253, 255, 0.9),
-                    inset 10px 10px 30px transparent,
-                    inset -10px -10px 30px transparent;
+                background-color: rgba(2, 2, 2, 0);
+                background-image: url(data:image/{"png"};base64,{encoded_string});
+                background-position: top;
+                padding: 40px 5%;
+                color: #9e1717;
+                font-size:36px;
             }}
             </style>
         </p>
         """
+    )
+
+
+@st.cache_data
+def background_image(
+    image_file: str = "pages/common/images/sky.png", dark_mode: bool = True
+):
+    import base64
+
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+
+    dark_mode_css = ""
+    if dark_mode:
+        dark_mode_css = """
+            .main::before {
+                background-color: rgba(0,0,0,0.4);
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                content: ' ';
+        }
+        """
+
+    st.markdown(
+        f"""
+    <style>
+    [data-testid="stAppViewContainer"] > .main {{
+        background-image: url(data:image/{"png"};base64,{encoded_string});
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    {dark_mode_css}
+    .stApp > header {{
+        display: none;
+    }}
+    .stAlert{{
+        background-color: rgba(0, 0, 0, 0.4);
+        border-radius: 0.5rem;
+    }}
+    .stAlert p, .stTabs button p{{
+        color: #fff !important;
+    }}
+    </style>
+    """,
+        unsafe_allow_html=True,
     )

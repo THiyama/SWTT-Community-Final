@@ -1,16 +1,18 @@
 import streamlit as st
 
 from utils.utils import display_page_titles_sidebar
-from utils.designs import display_problem_statement
+from utils.designs import display_problem_statement, apply_default_custom_css
 
-ANSWER_TEXT = "呪文"
 
+ANSWER_TEXT = "クリスタル・フレア"
+
+apply_default_custom_css()
 st.header("真実の呪文", divider="rainbow")
 
 display_page_titles_sidebar()
-display_problem_statement("Snowflakeの村人たちから呪文を聞き出せ！")
+display_problem_statement("Snowflake 村の民から呪文を聞き出せ！")
 
-st.write("Snowflakeで困ったら助けてくれる村人たちが知ってるぞ")
+st.write("Snowflake で困ったら助けてくれる村人たちが知ってるぞ")
 st.image("pages/resources/snowvillage.png")
 
 answer = st.text_input("聞き出した呪文を入力してください")
