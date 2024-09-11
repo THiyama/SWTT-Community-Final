@@ -6,6 +6,7 @@ from utils.designs import apply_default_custom_css, display_applied_message
 
 TEAM_ID = "Final_Problem"
 
+st.set_page_config(layout="wide")
 display_page_titles_sidebar()
 
 st.title("💎データクリスタルの復活")
